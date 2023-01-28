@@ -1,0 +1,31 @@
+[agent]
+ collection_jitter = "0s"
+ debug = false
+ flush_interval = "10s"
+ flush_jitter = "0s"
+ hostname = ""
+ interval = "10s"
+ metric_batch_size = 100000
+ metric_buffer_limit = 100000
+ omit_hostname = true
+ round_interval = true
+
+[inputs]
+ [[inputs.execd]]
+  command = [
+   "./bin/gtfs_realtimed",
+   "--key", "$GTFS_KEY",
+   "--vehicle-positions-url", "$GTFS_VEHICLE_POSITIONS_URL"
+  ]
+  data_format = "influx"
+  signal = "SIGUSR1"
+
+[outputs]
+ [[outputs.influxdb_v2]]
+  bucket = "mbta"
+  organization = "$INFLUXDB_ORG"
+  timeout = "30s"
+  token = "$INFLUXDB_TOKEN"
+  urls = [
+   "$INFLUXDB_HOST"
+  ]
