@@ -1,6 +1,6 @@
 # influxdb-gtfs
 
-Playing with GTFS data in InfluxDB
+Playing with GTFS data in [InfluxDB Cloud](https://cloud2.influxdata.com/signup) using the new [IOx storage engine](https://github.com/influxdata/influxdb_iox).
 
 ## Contents
 
