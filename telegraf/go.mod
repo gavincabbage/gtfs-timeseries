@@ -1,4 +1,4 @@
-module github.com/gavincabbage/influxdb-gtfs/gtfs
+module github.com/gavincabbage/influxdb-gtfs/telegraf
 
 go 1.19
 
