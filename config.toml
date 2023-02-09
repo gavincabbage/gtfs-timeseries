@@ -21,6 +21,8 @@
   signal = "SIGUSR1"
 
 [outputs]
+
+ # InfluxDB IOx
  [[outputs.influxdb_v2]]
   bucket = "mbta"
   organization = "$INFLUXDB_ORG"
@@ -28,4 +30,12 @@
   token = "$INFLUXDB_TOKEN"
   urls = [
    "$INFLUXDB_HOST"
+  ]
+
+ # TimescaleDB
+ [[outputs.postgresql]]
+  connection = "$TIMESCALE_DSN"
+  create_templates = [
+   '''CREATE TABLE {{ .table }} ({{ .columns }})''',
+   '''SELECT create_hypertable({{ .table|quoteLiteral }}, 'time', chunk_time_interval => INTERVAL '1h')'''
   ]
