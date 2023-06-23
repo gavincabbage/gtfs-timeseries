@@ -1,7 +1,7 @@
 from flightsql import connect, FlightSQLClient
 from geojson import LineString,Feature,FeatureCollection,dump
 import os
-import psycopg2
+import psycopg
 
 
 ndx_vehicle_id, ndx_time, ndx_route_id, ndx_latitude, ndx_longitude = 0, 1, 2, 3, 4
@@ -26,10 +26,9 @@ def to_geojson(conn, query):
     current_vehicle = ''
     current_route = ''
     previous_coord = ()
-    print(query)
     cursor.execute(query)
     rows = cursor.fetchall()
-    for row in rows: #$cursor.execute(query):
+    for row in rows:
         if row[ndx_vehicle_id] != current_vehicle and current_vehicle != '':
             features.append(Feature(
                 geometry=LineString(coords),
@@ -84,7 +83,7 @@ def run_flightsql(host, token, bucket):
 
 
 def run_postgresql(dsn):
-    conn = psycopg2.connect(dsn)
+    conn = psycopg.connect(dsn)
 
     out = to_geojson(conn, format_query('position', '1 hour'))
     with open('mbta_postgresql.geojson', 'w') as f:
